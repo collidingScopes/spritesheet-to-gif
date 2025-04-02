@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprite Sheet to GIF Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include the locally saved gif.js library -->
+    <script src="gif.js"></script>
+</head>
+<body>
+    <h1>SPRITE SHEET TO GIF</h1>
+    
+    <div class="container">
+        <!-- Neo-brutalist decorative elements -->
+        <div class="neo-deco deco-square"></div>
+        <div class="neo-deco deco-circle"></div>
+    
+        <div class="input-group">
+            <label for="spriteUpload">UPLOAD SPRITE SHEET</label>
+            <input type="file" id="spriteUpload" accept="image/*">
+        </div>
+        
+        <div class="main-layout">
+            <div class="controls-column">
+                <div class="param-grid">
+                    <div class="input-group">
+                        <label for="rows">NUMBER OF ROWS</label>
+                        <input type="number" id="rows" value="3" min="1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="cols">NUMBER OF COLUMNS</label>
+                        <input type="number" id="cols" value="4" min="1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="frameDelay">FRAME DELAY (MS)</label>
+                        <input type="number" id="frameDelay" value="100" min="10">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="quality">QUALITY (1-10)</label>
+                        <input type="number" id="quality" value="10" min="1" max="10">
+                    </div>
+                </div>
+                
+                <button id="generateBtn" disabled>GENERATE GIF</button>
+                <div id="statusText" class="status hidden"></div>
+                <progress id="progressBar" value="0" max="100" class="hidden"></progress>
+            </div>
+            
+            <div class="preview-column">
+                <div id="previewContainer" class="hidden">
+                    <div class="section-header">
+                        <h2>SPRITE SHEET PREVIEW</h2>
+                    </div>
+                    <img id="spritePreview" class="preview">
+                </div>
+            </div>
+        </div>
+        
+        <div id="resultContainer" class="hidden">
+            <div class="section-header">
+                <h2>GENERATED GIF</h2>
+            </div>
+            <img id="gifOutput">
+            <a id="downloadLink" class="hidden">
+                <button class="download-btn">DOWNLOAD GIF</button>
+            </a>
+        </div>
+        
+        <div id="framePreview" class="hidden">
+            <div class="section-header">
+                <h2>EXTRACTED FRAMES</h2>
+            </div>
+            <!-- Frames will be added here -->
+        </div>
+    </div>
+    
+    <canvas id="tempCanvas" class="hidden"></canvas>
+    
+    <!-- JavaScript remains the same -->
+    <script>
+        // DOM Elements
+        const spriteUpload = document.getElementById('spriteUpload');
+        const generateBtn = document.getElementById('generateBtn');
+        const spritePreview = document.getElementById('spritePreview');
+        const previewContainer = document.getElementById('previewContainer');
+        const resultContainer = document.getElementById('resultContainer');
+        const gifOutput = document.getElementById('gifOutput');
+        const downloadLink = document.getElementById('downloadLink');
+        const tempCanvas = document.getElementById('tempCanvas');
+        const progressBar = document.getElementById('progressBar');
+        const statusText = document.getElementById('statusText');
+        const framePreview = document.getElementById('framePreview');
+        
+        // Form inputs
+        const rowsInput = document.getElementById('rows');
+        const colsInput = document.getElementById('cols');
+        const frameDelayInput = document.getElementById('frameDelay');
+        const qualityInput = document.getElementById('quality');
+        
+        // Variables
+        let spriteSheet = null;
+        
+        // Event listeners
+        spriteUpload.addEventListener('change', handleSpriteUpload);
+        generateBtn.addEventListener('click', generateGif);
+        
+        function handleSpriteUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    spriteSheet = img;
+                    spritePreview.src = img.src;
+                    previewContainer.classList.remove('hidden');
+                    generateBtn.disabled = false;
+                    
+                    // Clear previous results
+                    resultContainer.classList.add('hidden');
+                    framePreview.innerHTML = '<div class="section-header"><h2>EXTRACTED FRAMES</h2></div>';
+                    framePreview.classList.add('hidden');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function generateGif() {
+            if (!spriteSheet) return;
+            
+            // Get parameters
+            const rows = parseInt(rowsInput.value) || 3;
+            const cols = parseInt(colsInput.value) || 4;
+            const frameDelay = parseInt(frameDelayInput.value) || 100;
+            const quality = parseInt(qualityInput.value) || 10;
+            
+            // Calculate frame dimensions
+            const frameWidth = Math.floor(spriteSheet.width / cols);
+            const frameHeight = Math.floor(spriteSheet.height / rows);
+            
+            // Set up canvas
+            tempCanvas.width = frameWidth;
+            tempCanvas.height = frameHeight;
+            const ctx = tempCanvas.getContext('2d');
+            
+            // Show status and progress
+            statusText.textContent = 'EXTRACTING FRAMES...';
+            statusText.classList.remove('hidden');
+            progressBar.classList.remove('hidden');
+            progressBar.value = 0;
+            generateBtn.disabled = true;
+            framePreview.innerHTML = '<div class="section-header"><h2>EXTRACTED FRAMES</h2></div>';
+            framePreview.classList.remove('hidden');
+            
+            // Create GIF
+            const gif = new GIF({
+                workers: 2,
+                quality: quality,
+                width: frameWidth,
+                height: frameHeight,
+                workerScript: 'gif.worker.js'  // Use local worker script
+            });
+            
+            // Total number of frames
+            const totalFrames = rows * cols;
+            let framesDone = 0;
+            
+            // Process frames row by row, left to right
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    // Clear canvas
+                    ctx.clearRect(0, 0, frameWidth, frameHeight);
+                    
+                    // Draw current frame on canvas
+                    ctx.drawImage(
+                        spriteSheet,
+                        col * frameWidth,
+                        row * frameHeight,
+                        frameWidth,
+                        frameHeight,
+                        0,
+                        0,
+                        frameWidth,
+                        frameHeight
+                    );
+                    
+                    // Add frame to preview
+                    const frameImg = document.createElement('img');
+                    frameImg.src = tempCanvas.toDataURL('image/png');
+                    framePreview.appendChild(frameImg);
+                    
+                    // Add frame to GIF
+                    gif.addFrame(ctx, {
+                        copy: true,
+                        delay: frameDelay
+                    });
+                    
+                    // Update progress
+                    framesDone++;
+                    progressBar.value = (framesDone / totalFrames) * 50; // Save 50% for rendering
+                }
+            }
+            
+            // GIF events
+            gif.on('progress', function(p) {
+                progressBar.value = 50 + (p * 50); // Last 50% for rendering
+                statusText.textContent = `RENDERING GIF: ${Math.round(p * 100)}%`;
+            });
+            
+            gif.on('finished', function(blob) {
+                // Display the GIF
+                const url = URL.createObjectURL(blob);
+                gifOutput.src = url;
+                downloadLink.href = url;
+                downloadLink.download = 'sprite-animation.gif';
+                
+                // Show results
+                resultContainer.classList.remove('hidden');
+                downloadLink.classList.remove('hidden');
+                progressBar.classList.add('hidden');
+                statusText.textContent = 'GIF CREATED SUCCESSFULLY!';
+                generateBtn.disabled = false;
+            });
+            
+            // Start rendering
+            statusText.textContent = 'RENDERING GIF...';
+            gif.render();
+        }
+    </script>
+</body>
+</html>

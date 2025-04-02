@@ -1,0 +1,353 @@
+/* Neo-Brutalist styling for Sprite Sheet to GIF Converter */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Work+Sans:wght@600;800&display=swap');
+
+:root {
+    --primary: #ff3c00;
+    --secondary: #00c2ff;
+    --accent: #ffde59;
+    --black: #000000;
+    --off-white: #f5f5f5;
+    --dark-gray: #222222;
+    --light-gray: #d1d1d1;
+    --border-thick: 4px;
+    --box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.9);
+}
+
+body {
+    font-family: 'Space Mono', monospace;
+    background-color: var(--off-white);
+    color: var(--black);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.4;
+    letter-spacing: -0.3px;
+}
+
+h1, h2 {
+    font-family: 'Work Sans', sans-serif;
+    color: var(--black);
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: left;
+    margin-bottom: 1.2em;
+    letter-spacing: -1px;
+    position: relative;
+}
+
+h1 {
+    font-size: 2.8em;
+    margin-bottom: 0.8em;
+    margin-top: 0.5em;
+    border-bottom: var(--border-thick) solid var(--black);
+    padding-bottom: 0.3em;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    background-color: var(--off-white);
+    padding: 40px;
+    border: var(--border-thick) solid var(--black);
+    box-shadow: var(--box-shadow);
+    position: relative;
+}
+
+/* Layout for side-by-side preview and controls */
+.main-layout {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.controls-column {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 300px;
+}
+
+.preview-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 800px) {
+    .main-layout {
+        flex-direction: column;
+    }
+    
+    .controls-column {
+        width: 100%;
+    }
+    
+    .param-grid {
+        width: 100%;
+    }
+}
+
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: var(--black);
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+input[type="file"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: var(--off-white);
+    border: var(--border-thick) solid var(--black);
+    font-family: inherit;
+    cursor: pointer;
+    display: block;
+}
+
+input[type="file"]:hover {
+    background-color: var(--accent);
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0 var(--black);
+    transition: all 0.2s ease;
+}
+
+input[type="number"] {
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    border: var(--border-thick) solid var(--black);
+    font-family: inherit;
+    background-color: var(--off-white);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    background-color: var(--accent);
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0 var(--black);
+}
+
+.param-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    background-color: var(--light-gray);
+    padding: 25px;
+    border: var(--border-thick) solid var(--black);
+    box-shadow: var(--box-shadow);
+    width: 300px;
+}
+
+button {
+    background-color: var(--primary);
+    border: var(--border-thick) solid var(--black);
+    color: var(--black);
+    padding: 14px 20px;
+    text-align: center;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 1.1em;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 4px 2px;
+    cursor: pointer;
+    box-shadow: var(--box-shadow);
+    transition: all 0.2s ease;
+    align-self: center;
+    min-width: 200px;
+}
+
+button:hover {
+    background-color: var(--accent);
+    transform: translate(-4px, -4px);
+    box-shadow: 8px 8px 0 var(--black);
+}
+
+button:active {
+    transform: translate(2px, 2px);
+    box-shadow: 4px 4px 0 var(--black);
+}
+
+button:disabled {
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.preview {
+    max-width: 100%;
+    border: var(--border-thick) solid var(--black);
+    margin-top: 15px;
+    box-shadow: var(--box-shadow);
+    object-fit: contain;
+    max-height: 400px;
+}
+
+#gifOutput {
+    border: var(--border-thick) solid var(--black);
+    margin-top: 15px;
+    box-shadow: var(--box-shadow);
+    max-width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.download-btn {
+    background-color: var(--secondary);
+    margin-top: 25px;
+}
+
+.download-btn:hover {
+    background-color: var(--accent);
+}
+
+progress {
+    width: 100%;
+    height: 20px;
+    margin-top: 15px;
+    -webkit-appearance: none;
+    border: var(--border-thick) solid var(--black);
+    box-shadow: var(--box-shadow);
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--off-white);
+}
+
+progress::-webkit-progress-value {
+    background: var(--primary);
+}
+
+#framePreview {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+#framePreview img {
+    border: 3px solid var(--black);
+    max-height: 100px;
+    transition: all 0.2s ease;
+    box-shadow: 4px 4px 0 var(--black);
+}
+
+#framePreview img:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 8px 8px 0 var(--black);
+}
+
+.status {
+    padding: 15px;
+    margin-top: 15px;
+    background-color: var(--accent);
+    text-align: center;
+    font-weight: 700;
+    border: var(--border-thick) solid var(--black);
+    box-shadow: var(--box-shadow);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: var(--secondary);
+    padding: 10px 20px;
+    border: var(--border-thick) solid var(--black);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: -10px;
+}
+
+.section-header h2 {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    color: var(--black);
+    font-size: 1.5em;
+}
+
+#previewContainer {
+    border: var(--border-thick) solid var(--black);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    background-color: var(--light-gray);
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+#resultContainer {
+    border: var(--border-thick) solid var(--black);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    margin-top: 25px;
+    background-color: var(--light-gray);
+    order: 2;
+}
+
+#framePreview {
+    order: 3;
+    margin-top: 40px;
+}
+
+/* Remove decorative leaves since they don't fit neo-brutalism style */
+.leaf-decoration {
+    display: none;
+}
+
+/* Custom decorative elements for neo-brutalism */
+.neo-deco {
+    position: absolute;
+    background-color: var(--accent);
+    border: var(--border-thick) solid var(--black);
+    z-index: -1;
+}
+
+.deco-square {
+    width: 40px;
+    height: 40px;
+    right: -20px;
+    top: -20px;
+}
+
+.deco-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    left: -30px;
+    bottom: -30px;
+}
+
+/* Clean background */
+body {
+    background-image: none;
+    position: relative;
+    background-color: var(--off-white);
+}
