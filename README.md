@@ -22,7 +22,9 @@ A free web tool that converts sprite sheets into animated GIFs. Useful for video
 
 ## Setup
 
-Simply clone the repository and open `index.html` in a browser:
+**Use it here: [https://collidingscopes.github.io/spritesheet-to-gif](https://collidingscopes.github.io/spritesheet-to-gif)**
+
+If you want to run this locally, simply clone the repository and open `index.html` in a browser:
 
 ```bash
 git clone git@github.com:collidingScopes/spritesheet-to-gif.git
