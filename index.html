@@ -24,6 +24,7 @@
     <meta property="twitter:image" content="https://raw.githubusercontent.com/collidingScopes/spritesheet-to-gif/main/assets/siteOGImage.png">
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Include the locally saved gif.js library -->
     <script src="gif.js"></script>
 
@@ -31,7 +32,7 @@
 
 </head>
 <body>
-    <h1>SPRITE SHEET TO GIF</h1>
+    <h1>SPRITE SHEET TO GIF 👾</h1>
     
     <div class="container">
         <!-- Neo-brutalist decorative elements -->
@@ -59,6 +60,27 @@
                     <div class="input-group">
                         <label for="frameDelay">FRAME DELAY (MS)</label>
                         <input type="number" id="frameDelay" value="150" min="10">
+                    </div>
+                    
+                    <!-- New offset controls -->
+                    <div class="input-group">
+                        <label for="offsetTop">OFFSET TOP (PX)</label>
+                        <input type="number" id="offsetTop" value="0" min="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="offsetBottom">OFFSET BOTTOM (PX)</label>
+                        <input type="number" id="offsetBottom" value="0" min="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="offsetLeft">OFFSET LEFT (PX)</label>
+                        <input type="number" id="offsetLeft" value="0" min="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="offsetRight">OFFSET RIGHT (PX)</label>
+                        <input type="number" id="offsetRight" value="0" min="0">
                     </div>
                     
                 </div>
@@ -100,6 +122,42 @@
     </div>
     
     <canvas id="tempCanvas" class="hidden"></canvas>
+
+    <div id="notesDiv">
+        <div id="textBox">
+  
+            <h2 id="aboutText">Sprite Sheet to GIF Converter🌀</h2>  
+            <p>This is a free web tool that turns sprite sheets into animated GIFs. Useful for video game creators and animators!</p>
+            <p>Upload your spritesheet image, and then use the controls to set row / column count, frame duration, and image offset margins.</p>
+            <p>The tool then converts your sprite sheet into a GIF file.</p>
+            <p>This tool is completely free, open source (MIT license), without any paywalls or premium options. You are welcome to use it for personal or commercial purposes.</p>
+            <p>If you found this tool useful, feel free to buy me a coffee. My name is Alan, and I enjoy building open source software for art, animation, games, and more. This would be much appreciated during late-night coding sessions!</p>
+            <a href="https://www.buymeacoffee.com/stereoDrift" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee"></a>  
+            <p>This project is coded using vanilla Javascript, HTML5 canvas, and CSS (<a href="https://github.com/collidingScopes/spritesheet-to-gif" target="_blank" rel="noopener">see github repo</a>). GIF creation is done using the gif.js library created by Johan Nordberg.</p>
+            <p>If you enjoyed this, you may be interested in my other free / open source projects:</p>
+            <ul>
+              <li><a href="https://collidingScopes.github.io/particular-drift" target="_blank" rel="noopener">Particular Drift</a>: turn photos into flowing particle animations</li>
+              <li><a href="https://collidingScopes.github.io/liquid-logo" target="_blank" rel="noopener">Liquid Logo</a>: turn logos and icons into liquid metal animations</li>
+              <li><a href="https://collidingScopes.github.io/ascii" target="_blank" rel="noopener">Video-to-ASCII</a>: turn videos into ASCII pixel art</li>
+              <li><a href="https://collidingScopes.github.io/shimmer" target="_blank" rel="noopener">Shape Shimmer</a>: turn photos into funky wave animations</li>
+              <li><a href="https://collidingScopes.github.io" target="_blank" rel="noopener">Colliding Scopes</a>: turn photos into kaleidoscope animations</li>
+              <li><a href="https://manual-brick-breaker.netlify.app" target="_blank" rel="noopener">Manual Brick Breaker</a>: play brick breaker by waving your hands around</li>
+            </ul>
+            <p>Feel free to reach out to discuss, give suggestions, or just to say hi! You can find me <a href="https://www.instagram.com/stereo.drift/" target="_blank" rel="noopener">@stereo.drift</a> on instagram, or through the other places below :)</p>
+        </div>
+      </div>
+  
+      <div id="linksDiv">
+        <table id="infoMenuTable">
+            <tr>
+                <td><button id="gitHubButton"class="socialMediaButton"><a href="https://github.com/collidingScopes/liquid-shape-distortions" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a></button></td>
+                <td><button id="coffeeButton" class="socialMediaButton"><a href="https://www.buymeacoffee.com/stereoDrift" target="_blank" rel="noopener"><i class="fa-solid fa-heart"></i></a></button></td>
+                <td><button id="instagramButton" class="socialMediaButton"><a href="https://www.instagram.com/stereo.drift/" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a></button></td>
+                <td><button id="xButton" class="socialMediaButton"><a class="x-link" href="https://x.com/measure_plan" target="_blank" rel="noopener">𝕏</i></a></button></td>
+                <td><button id="emailButton" class="socialMediaButton"><a href="mailto:stereodriftvisuals@gmail.com" target="_blank" rel="noopener"><i class="fa-solid fa-envelope"></i></a></button></td>
+            </tr>
+        </table>
+      </div>
     
     <!-- JavaScript remains the same -->
     <script>
@@ -122,6 +180,12 @@
         const colsInput = document.getElementById('cols');
         const frameDelayInput = document.getElementById('frameDelay');
         
+        // New offset inputs
+        const offsetTopInput = document.getElementById('offsetTop');
+        const offsetBottomInput = document.getElementById('offsetBottom');
+        const offsetLeftInput = document.getElementById('offsetLeft');
+        const offsetRightInput = document.getElementById('offsetRight');
+        
         // Variables
         let spriteSheet = null;
         
@@ -132,6 +196,10 @@
         // Add event listeners for real-time grid updates
         rowsInput.addEventListener('input', updateGridLines);
         colsInput.addEventListener('input', updateGridLines);
+        offsetTopInput.addEventListener('input', updateGridLines);
+        offsetBottomInput.addEventListener('input', updateGridLines);
+        offsetLeftInput.addEventListener('input', updateGridLines);
+        offsetRightInput.addEventListener('input', updateGridLines);
         
         function handleSpriteUpload(event) {
             const file = event.target.files[0];
@@ -170,9 +238,19 @@
             const rows = parseInt(rowsInput.value) || 4;
             const cols = parseInt(colsInput.value) || 4;
             
+            // Get offset values
+            const offsetTop = parseInt(offsetTopInput.value) || 0;
+            const offsetBottom = parseInt(offsetBottomInput.value) || 0;
+            const offsetLeft = parseInt(offsetLeftInput.value) || 0;
+            const offsetRight = parseInt(offsetRightInput.value) || 0;
+            
+            // Calculate effective dimensions after offsets
+            const effectiveWidth = spriteSheet.width - offsetLeft - offsetRight;
+            const effectiveHeight = spriteSheet.height - offsetTop - offsetBottom;
+            
             // Calculate frame dimensions
-            const frameWidth = Math.floor(spriteSheet.width / cols);
-            const frameHeight = Math.floor(spriteSheet.height / rows);
+            const frameWidth = Math.floor(effectiveWidth / cols);
+            const frameHeight = Math.floor(effectiveHeight / rows);
             
             // Get canvas context and clear previous drawings
             const ctx = spritePreviewOverlay.getContext('2d');
@@ -182,21 +260,31 @@
             ctx.strokeStyle = 'red';
             ctx.lineWidth = 2;
             
+            // Draw outer border to show offset area
+            ctx.beginPath();
+            ctx.rect(
+                offsetLeft, 
+                offsetTop, 
+                effectiveWidth, 
+                effectiveHeight
+            );
+            ctx.stroke();
+            
             // Draw vertical lines
             for (let col = 1; col < cols; col++) {
-                const x = col * frameWidth;
+                const x = offsetLeft + (col * frameWidth);
                 ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, spritePreviewOverlay.height);
+                ctx.moveTo(x, offsetTop);
+                ctx.lineTo(x, spritePreviewOverlay.height - offsetBottom);
                 ctx.stroke();
             }
             
             // Draw horizontal lines
             for (let row = 1; row < rows; row++) {
-                const y = row * frameHeight;
+                const y = offsetTop + (row * frameHeight);
                 ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(spritePreviewOverlay.width, y);
+                ctx.moveTo(offsetLeft, y);
+                ctx.lineTo(spritePreviewOverlay.width - offsetRight, y);
                 ctx.stroke();
             }
         }
@@ -205,14 +293,24 @@
             if (!spriteSheet) return;
             
             // Get parameters
-            const rows = parseInt(rowsInput.value) || 3;
+            const rows = parseInt(rowsInput.value) || 4;
             const cols = parseInt(colsInput.value) || 4;
-            const frameDelay = parseInt(frameDelayInput.value) || 100;
+            const frameDelay = parseInt(frameDelayInput.value) || 150;
             const quality = 10;
             
+            // Get offset values
+            const offsetTop = parseInt(offsetTopInput.value) || 0;
+            const offsetBottom = parseInt(offsetBottomInput.value) || 0;
+            const offsetLeft = parseInt(offsetLeftInput.value) || 0;
+            const offsetRight = parseInt(offsetRightInput.value) || 0;
+            
+            // Calculate effective dimensions after offsets
+            const effectiveWidth = spriteSheet.width - offsetLeft - offsetRight;
+            const effectiveHeight = spriteSheet.height - offsetTop - offsetBottom;
+            
             // Calculate frame dimensions
-            const frameWidth = Math.floor(spriteSheet.width / cols);
-            const frameHeight = Math.floor(spriteSheet.height / rows);
+            const frameWidth = Math.floor(effectiveWidth / cols);
+            const frameHeight = Math.floor(effectiveHeight / rows);
             
             // Set up canvas
             tempCanvas.width = frameWidth;
@@ -247,11 +345,15 @@
                     // Clear canvas
                     ctx.clearRect(0, 0, frameWidth, frameHeight);
                     
-                    // Draw current frame on canvas
+                    // Calculate source coordinates with offsets
+                    const sourceX = offsetLeft + (col * frameWidth);
+                    const sourceY = offsetTop + (row * frameHeight);
+                    
+                    // Draw current frame on canvas with offsets applied
                     ctx.drawImage(
                         spriteSheet,
-                        col * frameWidth,
-                        row * frameHeight,
+                        sourceX,
+                        sourceY,
                         frameWidth,
                         frameHeight,
                         0,

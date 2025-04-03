@@ -1,4 +1,4 @@
-/* Neo-Brutalist styling for Sprite Sheet to GIF Converter */
+/* Fixed CSS to place labels side-by-side with inputs using grid layout */
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Work+Sans:wght@600;800&display=swap');
 
 :root {
@@ -19,7 +19,7 @@ body {
     color: var(--black);
     max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
     line-height: 1.4;
     letter-spacing: -0.3px;
 }
@@ -70,7 +70,7 @@ h2 {
     flex: 0 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 0px;
+    gap: 20px;
     width: 300px;
 }
 
@@ -78,6 +78,96 @@ h2 {
     flex: 1;
     display: flex;
     flex-direction: column;
+}
+
+/* Special treatment for file upload */
+#spriteUpload {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: var(--off-white);
+    border: var(--border-thick) solid var(--black);
+    font-family: inherit;
+    cursor: pointer;
+    display: block;
+    margin-top: 10px;
+}
+
+#spriteUpload:hover {
+    background-color: var(--accent);
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0 var(--black);
+    transition: all 0.2s ease;
+}
+
+/* Grid layout for the parameter inputs */
+.param-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    background-color: var(--light-gray);
+    padding: 15px;
+    border: var(--border-thick) solid var(--black);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    box-sizing: border-box;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Two-column layout for individual input groups */
+.param-grid .input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 5px;
+}
+
+.param-grid label {
+    font-weight: 700;
+    color: var(--black);
+    text-transform: uppercase;
+    font-size: 0.9em;
+    margin: 0;
+    justify-self: start;
+}
+
+.param-grid input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: var(--border-thick) solid var(--black);
+    font-family: inherit;
+    background-color: var(--off-white);
+    font-weight: bold;
+    font-size: 1.1em;
+    justify-self: end;
+}
+
+.param-grid input[type="number"]:focus {
+    outline: none;
+    background-color: var(--accent);
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0 var(--black);
+}
+
+/* Group the offset controls visually */
+.param-grid .input-group:nth-child(n+4) {
+    position: relative;
+}
+
+.param-grid .input-group:nth-child(4)::before {
+    content: "FRAME OFFSETS";
+    display: block;
+    grid-column: 1 / -1;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: 800;
+    text-align: center;
+    color: var(--black);
+    background-color: var(--accent);
+    padding: 5px;
+    border: 2px solid var(--black);
 }
 
 /* Responsive layout for smaller screens */
@@ -89,71 +179,6 @@ h2 {
     .controls-column {
         width: 100%;
     }
-    
-    .param-grid {
-        width: 100%;
-    }
-}
-
-.input-group {
-    margin-bottom: 0px;
-    position: relative;
-}
-
-label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 700;
-    color: var(--black);
-    text-transform: uppercase;
-    font-size: 0.9em;
-}
-
-input[type="file"] {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px;
-    background-color: var(--off-white);
-    border: var(--border-thick) solid var(--black);
-    font-family: inherit;
-    cursor: pointer;
-    display: block;
-}
-
-input[type="file"]:hover {
-    background-color: var(--accent);
-    transform: translate(-4px, -4px);
-    box-shadow: 4px 4px 0 var(--black);
-    transition: all 0.2s ease;
-}
-
-input[type="number"] {
-    padding: 12px;
-    width: 100%;
-    box-sizing: border-box;
-    border: var(--border-thick) solid var(--black);
-    font-family: inherit;
-    background-color: var(--off-white);
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-input[type="number"]:focus {
-    outline: none;
-    background-color: var(--accent);
-    transform: translate(-4px, -4px);
-    box-shadow: 4px 4px 0 var(--black);
-}
-
-.param-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-    background-color: var(--light-gray);
-    padding: 25px;
-    border: var(--border-thick) solid var(--black);
-    box-shadow: var(--box-shadow);
-    width: 300px;
 }
 
 button {
@@ -195,9 +220,7 @@ button:disabled {
 
 .preview {
     max-width: 100%;
-    /* border: var(--border-thick) solid var(--black); */
     margin-top: 15px;
-    /* box-shadow: var(--box-shadow); */
     object-fit: contain;
     max-height: 400px;
 }
@@ -315,11 +338,6 @@ progress::-webkit-progress-value {
     margin-top: 40px;
 }
 
-/* Remove decorative leaves since they don't fit neo-brutalism style */
-.leaf-decoration {
-    display: none;
-}
-
 /* Custom decorative elements for neo-brutalism */
 .neo-deco {
     position: absolute;
@@ -361,4 +379,48 @@ body {
     top: 0;
     left: 0;
     pointer-events: none; /* Allow clicks to pass through to image underneath */
+}
+
+/* Styling for table with github and social links */
+
+#linksDiv{
+    background-color: #faebf6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#infoMenuTable td {
+    text-align:center;
+    border: 0;
+    padding: 10px;
+}
+  
+  #infoMenuTable{
+    table-layout: fixed;
+    margin: 0px;
+  }
+  
+  a, a:visited{
+    color:rgb(161, 50, 154);
+  }
+  
+.socialMediaButton{
+    color:rgb(161, 50, 154);
+    font-size: 26px;
+    margin: 0;
+    padding: 4px;
+    border: none;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    max-height: 50px;
+    background-color: transparent;
+}
+  
+#buyMeACoffeeButton {
+    font-size: 10px;
+}
+
+.x-link {
+    text-decoration: none;
 }
