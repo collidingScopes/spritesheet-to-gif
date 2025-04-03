@@ -38,7 +38,6 @@ h1, h2 {
 h1 {
     font-size: 2.8em;
     margin-bottom: 0.8em;
-    margin-top: 0.5em;
     border-bottom: var(--border-thick) solid var(--black);
     padding-bottom: 0.3em;
     text-align: center;
@@ -46,16 +45,15 @@ h1 {
 
 h2 {
     font-size: 1.8em;
-    margin-top: 0.5em;
     margin-bottom: 0.8em;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     background-color: var(--off-white);
-    padding: 40px;
+    padding: 30px;
     border: var(--border-thick) solid var(--black);
     box-shadow: var(--box-shadow);
     position: relative;
@@ -72,7 +70,7 @@ h2 {
     flex: 0 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0px;
     width: 300px;
 }
 
@@ -98,7 +96,7 @@ h2 {
 }
 
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 0px;
     position: relative;
 }
 
@@ -197,9 +195,9 @@ button:disabled {
 
 .preview {
     max-width: 100%;
-    border: var(--border-thick) solid var(--black);
+    /* border: var(--border-thick) solid var(--black); */
     margin-top: 15px;
-    box-shadow: var(--box-shadow);
+    /* box-shadow: var(--box-shadow); */
     object-fit: contain;
     max-height: 400px;
 }
@@ -350,4 +348,17 @@ body {
     background-image: none;
     position: relative;
     background-color: var(--off-white);
+}
+
+/* Add styles for the preview overlay container */
+.preview-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+#spritePreviewOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Allow clicks to pass through to image underneath */
 }

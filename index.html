@@ -39,10 +39,6 @@
                         <input type="number" id="frameDelay" value="150" min="10">
                     </div>
                     
-                    <div class="input-group">
-                        <label for="quality">QUALITY (1-10)</label>
-                        <input type="number" id="quality" value="10" min="1" max="10">
-                    </div>
                 </div>
                 
                 <button id="generateBtn" disabled>GENERATE GIF</button>
@@ -55,7 +51,10 @@
                     <div class="section-header">
                         <h2>SPRITE SHEET PREVIEW</h2>
                     </div>
-                    <img id="spritePreview" class="preview">
+                    <div class="preview-wrapper">
+                        <img id="spritePreview" class="preview">
+                        <canvas id="spritePreviewOverlay" class="preview"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,6 +85,7 @@
         const spriteUpload = document.getElementById('spriteUpload');
         const generateBtn = document.getElementById('generateBtn');
         const spritePreview = document.getElementById('spritePreview');
+        const spritePreviewOverlay = document.getElementById('spritePreviewOverlay');
         const previewContainer = document.getElementById('previewContainer');
         const resultContainer = document.getElementById('resultContainer');
         const gifOutput = document.getElementById('gifOutput');
@@ -99,7 +99,6 @@
         const rowsInput = document.getElementById('rows');
         const colsInput = document.getElementById('cols');
         const frameDelayInput = document.getElementById('frameDelay');
-        const qualityInput = document.getElementById('quality');
         
         // Variables
         let spriteSheet = null;
@@ -107,6 +106,10 @@
         // Event listeners
         spriteUpload.addEventListener('change', handleSpriteUpload);
         generateBtn.addEventListener('click', generateGif);
+        
+        // Add event listeners for real-time grid updates
+        rowsInput.addEventListener('input', updateGridLines);
+        colsInput.addEventListener('input', updateGridLines);
         
         function handleSpriteUpload(event) {
             const file = event.target.files[0];
@@ -121,6 +124,13 @@
                     previewContainer.classList.remove('hidden');
                     generateBtn.disabled = false;
                     
+                    // Set up the overlay canvas to match the sprite sheet size
+                    spritePreviewOverlay.width = img.width;
+                    spritePreviewOverlay.height = img.height;
+                    
+                    // Draw the grid lines after image is loaded
+                    updateGridLines();
+                    
                     // Clear previous results
                     resultContainer.classList.add('hidden');
                     framePreview.innerHTML = '<div class="section-header"><h2>EXTRACTED FRAMES</h2></div>';
@@ -131,6 +141,44 @@
             reader.readAsDataURL(file);
         }
         
+        function updateGridLines() {
+            if (!spriteSheet) return;
+            
+            // Get current rows and columns values
+            const rows = parseInt(rowsInput.value) || 4;
+            const cols = parseInt(colsInput.value) || 4;
+            
+            // Calculate frame dimensions
+            const frameWidth = Math.floor(spriteSheet.width / cols);
+            const frameHeight = Math.floor(spriteSheet.height / rows);
+            
+            // Get canvas context and clear previous drawings
+            const ctx = spritePreviewOverlay.getContext('2d');
+            ctx.clearRect(0, 0, spritePreviewOverlay.width, spritePreviewOverlay.height);
+            
+            // Set line style
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 2;
+            
+            // Draw vertical lines
+            for (let col = 1; col < cols; col++) {
+                const x = col * frameWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, spritePreviewOverlay.height);
+                ctx.stroke();
+            }
+            
+            // Draw horizontal lines
+            for (let row = 1; row < rows; row++) {
+                const y = row * frameHeight;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(spritePreviewOverlay.width, y);
+                ctx.stroke();
+            }
+        }
+        
         function generateGif() {
             if (!spriteSheet) return;
             
@@ -138,7 +186,7 @@
             const rows = parseInt(rowsInput.value) || 3;
             const cols = parseInt(colsInput.value) || 4;
             const frameDelay = parseInt(frameDelayInput.value) || 100;
-            const quality = parseInt(qualityInput.value) || 10;
+            const quality = 10;
             
             // Calculate frame dimensions
             const frameWidth = Math.floor(spriteSheet.width / cols);
