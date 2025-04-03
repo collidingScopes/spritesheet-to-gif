@@ -1,8 +1,8 @@
 # Sprite Sheet to GIF Converter
 
-A browser-based tool that converts sprite sheets into animated GIFs.
+A free web tool that converts sprite sheets into animated GIFs. Useful for video game developers and animators.
 
-**Use it here: [https://collidingscopes.github.io/spritesheet-to-gif](https://collidingscopes.github.io/spritesheet-to-gif/)/**
+**Use it here: [https://collidingscopes.github.io/spritesheet-to-gif](https://collidingscopes.github.io/spritesheet-to-gif)/**
 
 <img class="example-image" src="assets/siteOGImage.png"> 
 <img class="example-image" src="assets/sprite-animation.gif"> 
@@ -11,17 +11,8 @@ A browser-based tool that converts sprite sheets into animated GIFs.
 
 - Upload any sprite sheet image
 - Configure rows and columns to extract frames
-- Adjust animation speed and quality
-- Preview individual extracted frames
+- Adjust animation speed
 - Download generated GIF
-
-## Usage
-
-1. Upload your sprite sheet
-2. Set the number of rows and columns in your sprite grid
-3. Adjust frame delay (animation speed) and quality
-4. Click "GENERATE GIF"
-5. Download your animated GIF
 
 ## Technologies
 
