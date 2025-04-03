@@ -2,7 +2,7 @@
 
 A free web tool that converts sprite sheets into animated GIFs. Useful for video game developers and animators.
 
-**Use it here: [https://collidingscopes.github.io/spritesheet-to-gif](https://collidingscopes.github.io/spritesheet-to-gif)/**
+**Use it here: [https://collidingscopes.github.io/spritesheet-to-gif](https://collidingscopes.github.io/spritesheet-to-gif)**
 
 <img class="example-image" src="assets/siteOGImage.png"> 
 <img class="example-image" src="assets/sprite-animation.gif"> 
