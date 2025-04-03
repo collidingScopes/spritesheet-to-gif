@@ -2,6 +2,11 @@
 
 A browser-based tool that converts sprite sheets into animated GIFs.
 
+**Use it here: [https://collidingscopes.github.io/spritesheet-to-gif](https://collidingscopes.github.io/spritesheet-to-gif/)/**
+
+<img class="example-image" src="assets/siteOGImage.png"> 
+<img class="example-image" src="assets/sprite-animation.gif"> 
+
 ## Features
 
 - Upload any sprite sheet image

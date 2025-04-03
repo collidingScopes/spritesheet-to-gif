@@ -424,3 +424,8 @@ body {
 .x-link {
     text-decoration: none;
 }
+
+.example-image {
+    width: min(80%, 400px);
+    height: auto;
+}
