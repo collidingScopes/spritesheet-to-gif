@@ -40,7 +40,7 @@
         <div class="neo-deco deco-circle"></div>
     
         <div class="input-group">
-            <label for="spriteUpload">UPLOAD SPRITE SHEET</label>
+            <label for="spriteUpload" id="spriteUploadLabel">UPLOAD SPRITE SHEET 👇</label>
             <input type="file" id="spriteUpload" accept="image/*">
         </div>
         
@@ -85,7 +85,7 @@
                     
                 </div>
                 
-                <button id="generateBtn" disabled>GENERATE GIF</button>
+                <button id="generateBtn" disabled>GENERATE GIF 🔮</button>
                 <div id="statusText" class="status hidden"></div>
                 <progress id="progressBar" value="0" max="100" class="hidden"></progress>
             </div>
@@ -191,9 +191,15 @@
         // Variables
         let spriteSheet = null;
         
+        // Example spritesheet path
+        const exampleSpritesheetPath = 'assets/example-spritesheet.png';
+        
         // Event listeners
         spriteUpload.addEventListener('change', handleSpriteUpload);
         generateBtn.addEventListener('click', generateGif);
+        
+        // Load example spritesheet on page load
+        window.addEventListener('DOMContentLoaded', loadExampleSpritesheet);
         
         // Add event listeners for real-time grid updates
         rowsInput.addEventListener('input', updateGridLines);
@@ -405,6 +411,34 @@
             // Start rendering
             statusText.textContent = 'RENDERING GIF...';
             gif.render();
+        }
+        
+        function loadExampleSpritesheet() {
+            // Create an Image object
+            const img = new Image();
+            
+            // Set up onload handler
+            img.onload = function() {
+                spriteSheet = img;
+                spritePreview.src = img.src;
+                previewContainer.classList.remove('hidden');
+                generateBtn.disabled = false;
+                
+                // Set up the overlay canvas to match the sprite sheet size
+                spritePreviewOverlay.width = img.width;
+                spritePreviewOverlay.height = img.height;
+                
+                // Draw the grid lines after image is loaded
+                updateGridLines();
+                
+                // Clear previous results
+                resultContainer.classList.add('hidden');
+                framePreview.innerHTML = '<div class="section-header"><h2>EXTRACTED FRAMES</h2></div>';
+                framePreview.classList.add('hidden');
+            };
+            
+            // Set source to example spritesheet
+            img.src = exampleSpritesheetPath;
         }
     </script>
 </body>

@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Work+Sans:wght@600;800&display=swap');
 
 :root {
-    --primary: #ff3c00;
+    --primary: #ff6bb0;
     --secondary: #00c2ff;
     --accent: #ffde59;
     --black: #000000;
@@ -85,12 +85,12 @@ h2 {
     width: 100%;
     box-sizing: border-box;
     padding: 12px;
-    background-color: var(--off-white);
+    background-color: rgba(0, 194, 255, 0.3);
     border: var(--border-thick) solid var(--black);
     font-family: inherit;
     cursor: pointer;
     display: block;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 #spriteUpload:hover {
@@ -98,6 +98,10 @@ h2 {
     transform: translate(-4px, -4px);
     box-shadow: 4px 4px 0 var(--black);
     transition: all 0.2s ease;
+}
+
+#spriteUploadLabel {
+    font-weight: bold;
 }
 
 /* Grid layout for the parameter inputs */
