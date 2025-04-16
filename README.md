@@ -34,3 +34,11 @@ cd spritesheet-to-gif
 ## License
 
 MIT
+
+## Donations
+
+If you found this tool useful, feel free to buy me a coffee. My name is Alan and my passion is to build open source projects for animation, web games, and other pursuits.
+
+This would be much appreciated during late-night coding sessions
+
+<a href="https://www.buymeacoffee.com/stereodrift" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Coffee" height="41" width="174"></a>
